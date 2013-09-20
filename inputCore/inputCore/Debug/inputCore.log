@@ -1,0 +1,17 @@
+﻿Build started 9/20/2013 3:29:26 PM.
+     1>Project "C:\Users\JrX818\documents\visual studio 2010\Projects\inputCore\inputCore\inputCore.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\inputCore.unsuccessfulbuild".
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Input.cpp main.cpp
+         Input.cpp
+         c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>c:\users\jrx818\documents\visual studio 2010\projects\inputcore\inputcore\main.h(14): fatal error C1083: Cannot open include file: 'Application.h': No such file or directory
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         main.cpp
+     1>Done Building Project "C:\Users\JrX818\documents\visual studio 2010\Projects\inputCore\inputCore\inputCore.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.88
