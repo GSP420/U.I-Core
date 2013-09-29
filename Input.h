@@ -1,6 +1,5 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-#include"main.h"
 
 class Input
 {
@@ -18,6 +17,12 @@ public:
 	bool					DPressed();
 	bool					SpaceBar();
 
+	bool					WHeld();
+	bool					AHeld();
+	bool					SHeld();
+	bool					DHeld();
+	bool					SpaceBarHeld();
+
 
 
 private:
@@ -25,4 +30,5 @@ private:
 	LPDIRECTINPUTDEVICE8	m_pDIKeyboardDevice;
 
 	char					KeyBuffer[256];
+	bool					KeyWasDown[5];
 };

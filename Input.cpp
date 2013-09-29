@@ -45,7 +45,7 @@ if(FAILED(m_pDIKeyboardDevice->SetDataFormat(&c_dfDIKeyboard)))
  return false;
  }
 
-if(FAILED(m_pDIKeyboardDevice->SetCooperativeLevel(g_App.GetWindowHandle(),DISCL_BACKGROUND | DISCL_NONEXCLUSIVE)))
+if(FAILED(m_pDIKeyboardDevice->SetCooperativeLevel(NULL,DISCL_BACKGROUND | DISCL_NONEXCLUSIVE)))
  {
  MessageBox(NULL,"SetCooperativeLevel() failed!","InitKeyboard()",MB_OK);
  return false;
@@ -71,7 +71,7 @@ if(FAILED(m_pDIKeyboardDevice->GetDeviceState(sizeof(KeyBuffer),(LPVOID)&KeyBuff
 return true;
 }//Update
 
-bool KeyWasDown[5];
+#pragma region KeyInput
 
 bool Input::WPressed()
 {
@@ -88,7 +88,7 @@ bool Input::WPressed()
 	}
 
 	return false;
-}
+} 
 
 bool Input::APressed()
 {
@@ -157,6 +157,55 @@ bool Input::SpaceBar()
 
 	return false;
 }
+#pragma endregion KeyInput
+
+#pragma region KeyHeldDown
+
+bool Input::WHeld()
+{
+	if (KEYDOWN(KeyBuffer, DIK_W))
+	{
+		return true; 
+	}
+	return false;
+}
+
+bool Input::AHeld()
+{
+	if (KEYDOWN(KeyBuffer, DIK_A))
+	{
+		return true;		
+	}
+	return false;
+}
+
+bool Input::SHeld()
+{
+	if (KEYDOWN(KeyBuffer, DIK_S))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Input::DHeld()
+{
+	if (KEYDOWN(KeyBuffer, DIK_D))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Input::SpaceBarHeld()
+{
+	if (KEYDOWN(KeyBuffer, DIK_SPACE))
+	{
+		return true;
+	}
+	return false;
+}
+#pragma endregion KeyHeldDown
 
 Input::~Input(void)
 {
