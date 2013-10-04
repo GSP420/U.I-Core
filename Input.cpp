@@ -9,14 +9,14 @@ Input::Input(void)
 {
 	m_pDIObject = NULL;
 	m_pDIKeyboardDevice = NULL;
-
+	m_pDIMouseDevice = NULL;
 	
-
 	//Clears the buffer before use
 	ZeroMemory(&KeyBuffer, 256);
 
 	if(!InitDirectInput()) MessageBox (NULL, "InitDirectInput Failed", "ERROR", MB_OK);
 	else if(!InitKeyboard()) MessageBox (NULL, "InitKeyboard Failed", "ERROR", MB_OK);
+	else if(!InitMouse()) MessageBox (NULL, "InitMouse Failed", "Error", MB_OK);
 }//Input
 
 
@@ -60,6 +60,53 @@ if(FAILED(m_pDIKeyboardDevice->Acquire()))
 return true;
 }//InitKeyboard
 
+bool Input::InitMouse(void)
+{
+//device capabilities
+DIDEVCAPS MouseCapabilities; 
+
+if(FAILED(m_pDIObject->CreateDevice(GUID_SysMouse,&m_pDIMouseDevice,NULL)))
+ {
+ MessageBox(NULL,"CreateDevice() failed!","InitMouse()",MB_OK);
+ return false;
+ }
+
+if(FAILED(m_pDIMouseDevice->SetDataFormat(&c_dfDIMouse2)))
+ {
+ MessageBox(NULL,"SetDataFormat() failed!","InitMouse()",MB_OK);
+ return false;
+ }
+
+if(FAILED(m_pDIMouseDevice->SetCooperativeLevel(NULL,DISCL_BACKGROUND | DISCL_NONEXCLUSIVE)))
+ {
+ MessageBox(NULL,"SetCooperativeLevel() failed!","InitMouse()",MB_OK);
+ return false;
+ }
+
+if(FAILED(m_pDIMouseDevice->Acquire()))
+ {
+ MessageBox(NULL,"Acquire() failed!","InitMouse()",MB_OK);
+ return false;
+ }
+
+MouseCapabilities.dwSize = sizeof(MouseCapabilities);
+m_pDIMouseDevice->GetCapabilities(&MouseCapabilities);
+
+if(!(MouseCapabilities.dwFlags & DIDC_ATTACHED))
+ {
+ MessageBox(NULL,"Mouse is currently not attached!","InitMouse()",MB_OK);
+ return false;
+ }
+
+m_dwAxes = MouseCapabilities.dwAxes;
+m_dwButtons = MouseCapabilities.dwButtons;
+
+SetCursor("arrow.bmp",0,0,0xffffffff);
+SetAttributes(false,1.0f);
+
+return true;
+}//InitMouse
+
 bool Input::Update(void)
 {
 if(FAILED(m_pDIKeyboardDevice->GetDeviceState(sizeof(KeyBuffer),(LPVOID)&KeyBuffer)))
@@ -67,6 +114,11 @@ if(FAILED(m_pDIKeyboardDevice->GetDeviceState(sizeof(KeyBuffer),(LPVOID)&KeyBuff
  MessageBox(NULL,"GetDeviceState() failed!","Update()",MB_OK);
  return false;
  }
+
+if(DIERR_INPUTLOST == m_pDIMouseDevice->GetDeviceState(sizeof(m_MouseState),(LPVOID)&m_MouseState))
+{
+ m_pDIMouseDevice->Acquire();
+}
 
 return true;
 }//Update
@@ -220,5 +272,12 @@ if(m_pDIObject != NULL)
  {
  m_pDIObject->Release();
  m_pDIObject = NULL;
+
+ if(m_pDIMouseDevice != NULL)
+ {
+ m_pDIMouseDevice->Unacquire();
+ m_pDIMouseDevice->Release();
+ m_pDIMouseDevice = NULL;
+ }
  }
 }//~Input
