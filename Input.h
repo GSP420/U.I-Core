@@ -34,6 +34,8 @@ public:
 	bool					SPressed();
 	bool					DPressed();
 	bool					SpaceBar();
+	bool					LBUTTONPressed();
+	bool					RBUTTONPressed();
 
 							//Keyhold Checks
 	bool					WHeld();
@@ -41,6 +43,9 @@ public:
 	bool					SHeld();
 	bool					DHeld();
 	bool					SpaceBarHeld();
+	bool					LBUTTONHeld();
+	bool					RBUTTONHeld();
+
 
 						//draws mouse cursor
     void                 DrawCursor(void);

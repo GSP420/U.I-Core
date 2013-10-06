@@ -259,6 +259,53 @@ bool Input::SpaceBarHeld()
 }
 #pragma endregion KeyHeldDown
 
+#pragma region MouseInput
+
+bool Input::LBUTTONPressed()
+{
+ //Check the mouse left button is pressed or not
+   if ((GetKeyState(VK_LBUTTON) & 0x80) != 0)
+	{
+		return true; 
+	}
+	return false;
+}
+
+bool Input::RBUTTONPressed()
+{
+   //Check the mouse right button is pressed or not
+   if ((GetKeyState(VK_RBUTTON) & 0x80) != 0)
+	{
+		return true; 
+	}
+	return false;
+}
+
+bool Input::LBUTTONHeld()
+
+{
+	if (KEYDOWN(KeyBuffer, VK_LBUTTON))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Input::RBUTTONHeld()
+
+{
+	if (KEYDOWN(KeyBuffer, VK_RBUTTON))
+	{
+		return true;
+	}
+	return false;
+}
+
+
+
+#pragma endregion MouseInput
+
+
 Input::~Input(void)
 {
 if(m_pDIKeyboardDevice != NULL)
